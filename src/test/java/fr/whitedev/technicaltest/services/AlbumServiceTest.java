@@ -42,6 +42,18 @@ public class AlbumServiceTest extends AbstractTest {
 	}
 
 	@Test
+	public void shouldGetListWithOneAlbum() throws JsonProcessingException {
+		when(this.albumRepositoryMock.getAlbums()).thenReturn(this.albums);
+		assertThat(this.albumService.getAlbums(1)).hasSize(1);
+	}
+
+	@Test
+	public void shouldGetEmptyListIfAlbumIdIsNotFound() throws JsonProcessingException {
+		when(this.albumRepositoryMock.getAlbums()).thenReturn(this.albums);
+		assertThat(this.albumService.getAlbums(0)).isEmpty();
+	}
+
+	@Test
 	public void shouldGetEmptyListIfNoData() throws JsonProcessingException {
 		when(this.albumRepositoryMock.getAlbums()).thenReturn(Collections.emptyList());
 		assertThat(this.albumService.getAlbums(null)).isEmpty();
