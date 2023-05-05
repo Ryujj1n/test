@@ -6,7 +6,6 @@ This exercise involves building a music collection management system with a Spri
 ## Backend (Java)
 ### Required Tasks
 
-- Implement functionality to read the JSON files.
 - Use the TODO statements in the Java code to complete missing features.
 - Ensure that all unit tests pass. You can add additional tests if necessary.
 
