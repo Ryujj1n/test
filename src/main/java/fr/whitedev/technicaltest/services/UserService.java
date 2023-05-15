@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class UserService {
 
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	private List<User> users;
 
 	@Autowired
@@ -33,7 +33,13 @@ public class UserService {
 	}
 
 	public List<User> getUsers(Integer userId) {
-		// TODO: implement method to get ALL users, or ONE user if userId is not null
-		return Collections.emptyList();
+		List<User> userList = getUsers();
+		if (userId != null) {
+			return userList.stream()
+					.filter(user -> user.getId() == userId)
+					.toList();
+		} else {
+			return userList;
+		}
 	}
 }

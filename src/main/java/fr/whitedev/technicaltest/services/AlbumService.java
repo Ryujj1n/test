@@ -6,15 +6,22 @@ import fr.whitedev.technicaltest.repositories.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 // TODO: explain @Service, why @Autowired on constructor
+// Explanation :
+// @Service indicate the following class is a service class of the spring application. It is used to implement the business logic
+// @Autowired is used on the constructor, which indicate to the framework spring to inject a AlbumRepository dependency
+// when the constructor is called and an instance is created
 
 @Service
 public class AlbumService {
 
-	private AlbumRepository albumRepository;
+	private final AlbumRepository albumRepository;
 	private List<Album> albums;
 
 	@Autowired
@@ -35,22 +42,35 @@ public class AlbumService {
 	}
 
 	public List<Album> getAlbums(Integer albumId) {
-		// TODO: implement method to get ALL albums, or ONE album if albumId is not null
-		return Collections.emptyList();
+		List<Album> allAlbums = getAlbums();
+		if (albumId != null) {
+			return allAlbums.stream()
+					.filter(album -> album.getId() == albumId)
+					.toList();
+		} else {
+			return allAlbums;
+		}
 	}
 
 	public List<Album> getAlbumsByUserId(int userId) {
-		// TODO: implement method to get ALL albums of one user
-		return Collections.emptyList();
+		return getAlbums()
+				.stream()
+				.filter(album -> album.getUserId() == userId)
+				.toList();
 	}
 
 	public List<String> getAlbumsTitle() {
-		// TODO: implement method to get ALL titles of the albums
-		return Collections.emptyList();
+		return getAlbums()
+				.stream()
+				.map(Album::getTitle)
+				.toList();
 	}
 
 	public List<Integer> getUserIds() {
-		// TODO: implement method to get unique ids of users having at least one album
-		return Collections.emptyList();
+		return getAlbums()
+				.stream()
+				.map(Album::getUserId)
+				.distinct()
+				.toList();
 	}
 }

@@ -10,8 +10,9 @@ import java.util.List;
 public class UserRepository extends AbstractRepository {
 
 	public List<User> getUsers() throws JsonProcessingException {
-		return objectMapper.readValue(getBodyByFileName("users.json"), objectMapper.getTypeFactory()
-																			.constructCollectionType(List.class,
-																				User.class));
+		return objectMapper.readValue(
+				getBodyByFileName("users.json"),
+				objectMapper.getTypeFactory()
+						.constructCollectionType(List.class, User.class));
 	}
 }
